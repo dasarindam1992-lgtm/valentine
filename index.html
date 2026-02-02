@@ -4,6 +4,7 @@
     <title>My Valentine 💖</title>
     <style>
         body {
+            margin: 0;
             text-align: center;
             font-family: Arial, sans-serif;
             background: linear-gradient(to right, #ff9a9e, #fad0c4);
@@ -13,7 +14,15 @@
 
         h1 {
             margin-top: 100px;
-            font-size: 40px;
+            font-size: 42px;
+            color: white;
+            text-shadow: 0 0 10px pink, 0 0 20px red;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px pink; }
+            to { text-shadow: 0 0 25px red; }
         }
 
         button {
@@ -27,23 +36,35 @@
 
         #yesBtn {
             left: 40%;
-            top: 50%;
+            top: 55%;
             background-color: #ff4d6d;
             color: white;
         }
 
         #noBtn {
             left: 55%;
-            top: 50%;
+            top: 55%;
             background-color: gray;
             color: white;
+        }
+
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 20px;
+            animation: floatUp 6s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
         }
     </style>
 </head>
 
 <body>
 
-    <h1><h1>Will you be my Valentine, Chini? 💖🥰✨</h1></h1>
+    <h1>Will you be my Valentine, Chini? 💖🥰✨</h1>
 
     <button id="yesBtn" onclick="showLove()">Yes ❤️</button>
     <button id="noBtn">No 😢</button>
@@ -60,9 +81,47 @@
 
         function showLove() {
             document.body.innerHTML = "<h1>Yesssss!!! 💖 I knew it 😘 I love you to eternity 🌙✨</h1>";
+            confettiEffect();
         }
+
+        // Floating hearts
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "💖";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 6000);
+        }, 300);
+
+        // Confetti effect
+        function confettiEffect() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement("div");
+                confetti.style.position = "absolute";
+                confetti.style.width = "10px";
+                confetti.style.height = "10px";
+                confetti.style.backgroundColor = ["red","yellow","blue","pink","purple"][Math.floor(Math.random()*5)];
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.top = "-10px";
+                confetti.style.opacity = Math.random();
+                confetti.style.transform = "rotate(" + Math.random()*360 + "deg)";
+                confetti.style.animation = "fall 3s linear forwards";
+                document.body.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        const style = document.createElement("style");
+        style.innerHTML = `
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(720deg); }
+        }`;
+        document.head.appendChild(style);
     </script>
 
 </body>
-
 </html>
